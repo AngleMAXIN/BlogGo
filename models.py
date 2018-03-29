@@ -1,7 +1,7 @@
 #/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from main import db
+from exts import db
 from datetime import datetime
 
 
@@ -20,6 +20,17 @@ class User(db.Model):
         return '<User %s >' % self.username
 
 
+class Tag(db.Model):
+    """标签数据模型"""
+
+    __tablename__ = 'tags'
+
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    content = db.Column(db.String(20),nullable=False)
+
+    def __repr__(self):
+        return '<Tags %s>' % self.content
+
 
 class Article(db.Model):
 
@@ -31,8 +42,10 @@ class Article(db.Model):
     title = db.Column(db.String(64), nullable=False)    # nullable=False不允许出现空值
     content = db.Column(db.Text, nullable=False)
     create_time = db.Column(db.DateTime, default=datetime.now)
+    tag_id = db.Column(db.Integer, db.ForeignKey('tags.id'))
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
+    tag = db.relationship('Tag', backref=db.backref('tags'))
     author = db.relationship('User', backref=db.backref('article'))
 
     def __repr__(self):
@@ -56,3 +69,6 @@ class Comment(db.Model):
 
     def __repr__(self):
         return '<Comment %d >' % self.id
+
+
+
