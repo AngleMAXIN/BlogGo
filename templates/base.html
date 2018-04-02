@@ -87,9 +87,12 @@
                             <h3>作者风云榜</h3>
                         </header>
                         <div class="body">
-                            {% block list_header %}
-                            {% endblock %}
+                        <ul class="clean-list">
+                            {% for foo in author_list %}
+                            <li><a href="{{ url_for('user',user_id=foo.id) }}">{{ foo.username }}</a></li>
+                            {% endfor %}
 
+                        </ul>
                         </div>
                     </div>
 
@@ -98,10 +101,12 @@
                             <h3>热门文章</h3>
                         </header>
                         <div class="body">
-                            {% block list_mider %}
-
-
-                            {% endblock %}
+                            <ul class="clean-list">
+                           
+                            {% for foo in articles_list() %}
+                                <li><a href="{{ url_for('single', art_id=foo.id) }}">{{ foo.title }}</a></li>
+                            {% endfor %}
+                            </ul>
                         </div>
                     </div>
 
@@ -110,8 +115,11 @@
                             <h3>标签</h3>
                         </header>
                         <div class="body clearfix">
-                            {% block list_footer %}
-                            {% endblock %}
+                           <ul class="tags">
+                        {% for foo in tags_list %}
+                                 <li><a href="#">{{ foo.content }}</a></li>
+                        {% endfor %}
+                            </ul>
                         </div>
                     </div>
                 </aside>
@@ -161,8 +169,8 @@
     </footer>
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/modernizr.js"></script>
+    <script src="{{ url_for('static',filename = 'js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static',filename = 'js/modernizr.js') }}"></script>
 
 </body>
 </html>

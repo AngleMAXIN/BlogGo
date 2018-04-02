@@ -13,13 +13,17 @@ app.config.from_object(config['development'])
 config['development'].init_app(app)
 db.init_app(app)
 
+
+
+
+
 @app.route('/')
 def index():
 
     context = {
 
         'articles': Article.query.order_by('-create_time').all(),
-        'author': User.query.all(),
+        # 'author': User.query.all(),
         'tags' :  Tag.query.all()
     }
 
@@ -28,21 +32,32 @@ def index():
 
 @app.route('/single/<art_id>/')
 def single(art_id):
+    context = {
+    'article': Article.query.filter(Article.id == art_id).first(),
+    'articles': Article.query.order_by('-create_time').all(),
+    'author': User.query.all(),
+    'tags': Tag.query.all()
+    }
 
-    article = Article.query.filter(Article.id == art_id).first()
    
-    return render_template('single.html', article=article)
+    return render_template('single.html', **context)
 
 @app.route('/add_comment/', methods=['POST'])
 def add_comment():
 
     comment_content = request.form.get('message')
     if comment_content:
-        article_id = request.form.get('article.id')
+        article_id = request.form.get('article_id')
+        article = Article.query.filter(Article.id == article_id).first()
         email = request.form.get('email')
-        username = redirect.form.get('name')
-        comment = Comment()
-        db.session.add() 
+        username = request.form.get('name')
+        comment = Comment(content=comment_content,articles=article, author=username,email=email)
+        comment.articles = article
+        db.session.add(comment)
+        db.session.commit()
+        return redirect(url_for('single', art_id=article_id))
+    else:
+        return "评论不能为空"
 @app.route('/about/')
 def about():
     return render_template('about.html')
@@ -69,6 +84,27 @@ def post():
 
         return redirect(url_for('index'))
 
+
+@app.route('/user/<user_id>')
+def user(user_id):
+    # articles = Article.query.filter(author_id = user_id).all()
+    author = User.query.filter(User.id == user_id).first()
+    print(author.article)
+    return render_template('user.html',articles=author.article)
+
+@app.context_processor
+def author_list():
+    return dict(author_list=User.query.all())
+
+@app.context_processor
+def articles_list():
+    def get_art():
+        return Article.query.all()[:5]
+    return dict(articles_list=get_art)
+
+@app.context_processor
+def tags_list():
+    return dict(tags_list=Tag.query.all())
 
 if __name__ == '__main__':
     app.run()

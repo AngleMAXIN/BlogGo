@@ -63,7 +63,7 @@ class Comment(db.Model):
     article_id = db.Column(db.Integer, db.ForeignKey('articles.id'))
     author = db.Column(db.String(225), nullable=False)
     create_time = db.Column(db.DateTime, default=datetime.now)
-
+    email = db.Column(db.String(100), nullable=False)
     articles = db.relationship('Article', backref=db.backref('comments', order_by=id.desc())) # desc()降序
     
 

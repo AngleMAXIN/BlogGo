@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block body %}
+
     {% for article in articles %}
             <div class="col-md-6 col-sm-6">
                 <article class=" blog-teaser">
@@ -24,4 +25,26 @@
                     </div>
 {% endblock %}
 
+{% block list_header %}
+    <ul class="clean-list">
+    {% for foo in author %}
+      <li><a href="{{ url_for('user',user_id=foo.id) }}">{{ foo.username }}</a></li>
+    {% endfor %}
+    </ul>
+{% endblock %}
 
+{% block list_mider %}
+    <ul class="clean-list">
+       {% for foo in articles %}
+      <li><a href="{{ url_for('single', art_id=foo.id) }}">{{ foo.title }}</a></li>
+    {% endfor %}
+    </ul>
+{% endblock %}
+
+{% block list_footer %}
+    <ul class="tags">
+        {% for foo in tags %}
+      <li><a href="#">{{ foo.content }}</a></li>
+    {% endfor %}
+    </ul>
+{% endblock %}
