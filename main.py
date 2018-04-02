@@ -1,7 +1,5 @@
 #/usr/bin/env python3
-# -*- coding: utf-8 -*-
-#/usr/bin/env python3
-# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*- 
 
 from flask import Flask, render_template, redirect, request,session,url_for
 from exts import db
@@ -32,8 +30,19 @@ def index():
 def single(art_id):
 
     article = Article.query.filter(Article.id == art_id).first()
+   
     return render_template('single.html', article=article)
 
+@app.route('/add_comment/', methods=['POST'])
+def add_comment():
+
+    comment_content = request.form.get('message')
+    if comment_content:
+        article_id = request.form.get('article.id')
+        email = request.form.get('email')
+        username = redirect.form.get('name')
+        comment = Comment()
+        db.session.add() 
 @app.route('/about/')
 def about():
     return render_template('about.html')

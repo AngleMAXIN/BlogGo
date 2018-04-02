@@ -61,11 +61,11 @@ class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True) #primary_key=True主键
     content = db.Column(db.String(225), nullable=False)
     article_id = db.Column(db.Integer, db.ForeignKey('articles.id'))
-    author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    author = db.Column(db.String(225), nullable=False)
     create_time = db.Column(db.DateTime, default=datetime.now)
 
     articles = db.relationship('Article', backref=db.backref('comments', order_by=id.desc())) # desc()降序
-    author = db.relationship('User', backref=db.backref('comments'))
+    
 
     def __repr__(self):
         return '<Comment %d >' % self.id

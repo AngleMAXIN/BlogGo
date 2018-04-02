@@ -1,15 +1,25 @@
 {% extends 'base.html' %}
-                        <div class="body">
-                            <h1>{{ article.title }}</h1>
-                            <div class="meta">
-                                <i class="fa fa-user"></i> {{ article.author.username }}<i class="fa fa-calendar"></i>{{ article.create_time }}<i class="fa fa-comments"></i><span class="data"><a href="#comments">3 Comments</a></span>
+
+{% block body %}
+        <article class="blog-post">
+                        <header>
+                           
+                            <div class="lead-image">
+                                <img src="{{ url_for('static',filename='img/single-post.jpg')}}" alt="" class="img-responsive">
+                                
                             </div>
-                            {{ article.centent }}
+                        </header>
+                        <div class="body">
+                            <h1>{{ article. title }}</h1>
+                            <div class="meta">
+                                <i class="fa fa-user"></i> {{article.author.username }}<i class="fa fa-calendar"></i>{{ article.create_time }}<i class="fa fa-comments"></i><span class="data"><a href="#comments">3 Comments</a></span>
+                            </div>
+                        {{ article.content  }}
                         </div>
                     </article>
 
                     <aside class="social-icons clearfix">
-                        <h3>Share on </h3>
+                        <h3>Share on </h3> 
                         <a href="#"><i class="fa fa-facebook"></i></a> <a href="#"><i class="fa fa-twitter"></i></a> <a href="#"><i class="fa fa-google"></i></a>
                     </aside>
 
@@ -19,8 +29,8 @@
                         <h2><i class="fa fa-comments"></i> 6 Comments</h2>
 
                         <article class="comment">
-                            <header class="clearfix">
-                                <img src="img/avatar.png" alt="A Smart Guy" class="avatar">
+                            <header class="clearfix">=
+                                <img src="{{ url_for('static',filename="img/avatar.png") }}" alt="A Smart Guy" class="avatar">
                                 <div class="meta">
                                     <h3><a href="#">John Doe</a></h3>
                                     <span class="date">
@@ -29,97 +39,60 @@
                                     <span class="separator">
                                         -
                                     </span>
-
-                                    <a href="#create-comment" class="reply-link">Reply</a>
+                                    
+                                    <a href="#create-comment" class="reply-link">Reply</a>                
                                 </div>
                             </header>
                              <div class="body">
-                               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere sit perspiciatis debitis, vel ducimus praesentium expedita, assumenda ipsum cum corrupti dolorum modi. Rem ipsam similique sapiente obcaecati tenetur beatae voluptatibus.
+                               comment 1
                             </div>
                         </article>
 
-{#                        <article class="comment reply">#}
-{#                            <header class="clearfix">#}
-{#                                <img src="img/avatar.png" alt="A Smart Guy" class="avatar">#}
-{#                                <div class="meta">#}
-{#                                    <h3><a href="#">John Doe</a></h3>#}
-{#                                    <span class="date">#}
-{#                                        24 August 2015#}
-{#                                    </span>#}
-{#                                    <span class="separator">#}
-{#                                        -#}
-{#                                    </span>#}
-{##}
-{#                                    <a href="#create-comment" class="reply-link">Reply</a>#}
-{#                                </div>#}
-{#                            </header>#}
-{#                             <div class="body">#}
-{#                               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere sit perspiciatis debitis, vel ducimus praesentium expedita, assumenda ipsum cum corrupti dolorum modi. Rem ipsam similique sapiente obcaecati tenetur beatae voluptatibus.#}
-{#                            </div>#}
-{#                        </article>#}
-{##}
-{#                        <article class="comment ">#}
-{#                            <header class="clearfix">#}
-{#                                <img src="img/avatar.png" alt="A Smart Guy" class="avatar">#}
-{#                                <div class="meta">#}
-{#                                    <h3><a href="#">John Doe</a></h3>#}
-{#                                    <span class="date">#}
-{#                                        24 August 2015#}
-{#                                    </span>#}
-{#                                    <span class="separator">#}
-{#                                        -#}
-{#                                    </span>#}
-{##}
-{#                                    <a href="#create-comment" class="reply-link">Reply</a>#}
-{#                                </div>#}
-{#                            </header>#}
-{#                             <div class="body">#}
-{#                               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere sit perspiciatis debitis, vel ducimus praesentium expedita, assumenda ipsum cum corrupti dolorum modi. Rem ipsam similique sapiente obcaecati tenetur beatae voluptatibus.#}
-{#                            </div>#}
-{#                        </article>#}
-{##}
-{#                        <article class="comment">#}
-{#                            <header class="clearfix">#}
-{#                                <img src="img/avatar.png" alt="A Smart Guy" class="avatar">#}
-{#                                <div class="meta">#}
-{#                                    <h3><a href="#">John Doe</a></h3>#}
-{#                                    <span class="date">#}
-{#                                        24 August 2015#}
-{#                                    </span>#}
-{#                                    <span class="separator">#}
-{#                                        -#}
-{#                                    </span>#}
-{##}
-{#                                    <a href="#create-comment" class="reply-link">Reply</a>#}
-{#                                </div>#}
-{#                            </header>#}
-{#                             <div class="body">#}
-{#                               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere sit perspiciatis debitis, vel ducimus praesentium expedita, assumenda ipsum cum corrupti dolorum modi. Rem ipsam similique sapiente obcaecati tenetur beatae voluptatibus.#}
-{#                            </div>#}
-{#                        </article>#}
-{#                    </aside>#}
+                        <article class="comment reply">
+                            <header class="clearfix">
+                                <img src="{{ url_for('static',filename="img/avatar.png") }}" alt="A Smart Guy" class="avatar">
+                                <div class="meta">
+                                    <h3><a href="#">John Doe</a></h3>
+                                    <span class="date">
+                                        24 August 2015
+                                    </span>
+                                    <span class="separator">
+                                        -
+                                    </span>
+                                    
+                                    <a href="#create-comment" class="reply-link">Reply</a>                
+                                </div>
+                            </header>
+                             <div class="body">
+                              comment 2 
+                            </div>
+                        </article>
+
+                            
+                    </aside>
 
                     <aside class="create-comment" id="create-comment">
-                        <hr>
+                        <hr>    
 
                         <h2><i class="fa fa-pencil"></i> Add Comment</h2>
 
-                        <form action="#" method="get" accept-charset="utf-8">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <input type="text" name="name" id="comment-name" placeholder="Your Name" class="form-control input-lg">
-                                </div>
-                                <div class="col-md-6">
-                                    <input type="email" name="email" id="comment-email" placeholder="Email" class="form-control input-lg">
-                                </div>
-                            </div>
+        <form action="{{ url_for('add_comment') }}" method="post" accept-charset="utf-8">
+            <div class="row">
+                <div class="col-md-6">
+                    <input type="text" name="name" id="comment-name" placeholder="Your Name" class="form-control input-lg">    
+                </div>
+                <div class="col-md-6">
+                    <input type="email" name="email" id="comment-email" placeholder="Email" class="form-control input-lg">    
+                </div>
+            </div>
 
-                            <input type="url" name="name" id="comment-url" placeholder="Website" class="form-control input-lg">
+            <input type="hidden" name="name" value="{{ article.id }}">
 
-                            <textarea rows="10" name="message" id="comment-body" placeholder="Your Message" class="form-control input-lg"></textarea>
+            <textarea rows="10" name="message" id="comment-body" placeholder="Your Message" class="form-control input-lg"></textarea>
 
-                            <div class="buttons clearfix">
-                                <button type="submit" class="btn btn-xlarge btn-clean-one">Submit</button>
-                            </div>
-                        </form>
-
+            <div class="buttons clearfix">
+                <button type="submit" class="btn btn-xlarge btn-clean-one">评论</button>
+            </div>
+        </form>
+                    </aside>               
+{% endblock %}

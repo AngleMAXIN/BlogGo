@@ -1,0 +1,89 @@
+卷 DATA 的文件夹 PATH 列表
+卷序列号为 000000D8 90E5:0C18
+E:.
+│  config.py
+│  exts.py
+│  list.txt
+│  list.xtx
+│  main.py
+│  manage.py
+│  models.py
+│  README.md
+│  requirements.txt
+│  
+├─.idea
+│  │  BlogGo_Flask_env3.iml
+│  │  misc.xml
+│  │  modules.xml
+│  │  vcs.xml
+│  │  workspace.xml
+│  │  
+│  ├─dictionaries
+│  │      16781.xml
+│  │      
+│  └─inspectionProfiles
+│          profiles_settings.xml
+│          
+├─migrations
+│  │  alembic.ini
+│  │  env.py
+│  │  README
+│  │  script.py.mako
+│  │  
+│  ├─versions
+│  │  │  21ef9c07b9f7_the_first_add_cloumn.py
+│  │  │  d7ca92075815_.py
+│  │  │  
+│  │  └─__pycache__
+│  │          21ef9c07b9f7_the_first_add_cloumn.cpython-35.pyc
+│  │          d7ca92075815_.cpython-35.pyc
+│  │          
+│  └─__pycache__
+│          env.cpython-35.pyc
+│          
+├─static
+│  ├─css
+│  │  │  bootstrap.min.css
+│  │  │  style.css
+│  │  │  
+│  │  └─font-awesome
+│  │      ├─css
+│  │      │      font-awesome.css
+│  │      │      font-awesome.min.css
+│  │      │      
+│  │      └─fonts
+│  │              fontawesome-webfont.eot
+│  │              fontawesome-webfont.svg
+│  │              fontawesome-webfont.ttf
+│  │              fontawesome-webfont.woff
+│  │              fontawesome-webfont.woff2
+│  │              FontAwesome.otf
+│  │              
+│  ├─img
+│  │      1.jpg
+│  │      2.jpg
+│  │      3.jpg
+│  │      4.jpg
+│  │      avatar.png
+│  │      logo.png
+│  │      single-post.jpg
+│  │      
+│  └─js
+│          bootstrap.min.js
+│          jquery.min.js
+│          modernizr.js
+│          
+├─templates
+│      about.html
+│      base.html
+│      index.html
+│      post.html
+│      single.html
+│      _base.html
+│      
+└─__pycache__
+        config.cpython-35.pyc
+        exts.cpython-35.pyc
+        main.cpython-35.pyc
+        models.cpython-35.pyc
+        
