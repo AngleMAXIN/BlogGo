@@ -26,7 +26,7 @@
                     <aside class="comments" id="comments">
                         <hr>
 
-                        <h2><i class="fa fa-comments"></i> 6 Comments</h2>
+                        <h2><i class="fa fa-comments"></i>{{ article.comments | length() }} Comments</h2>
 
                         {% for post in article.comments %}
                         <article class="comment">

@@ -1,0 +1,32 @@
+{% extends '_base.html' %}
+
+{% block body_one %}
+
+		<div class="container">
+
+            <div class="row">
+
+                <div class="col-md-6 col-md-offset-3 clean-superblock" id="contact">
+                    <h2>Register</h2>
+						
+                    <form action="#" method="POST" accept-charset="utf-8" class="contact-form">
+
+                        <input type="text" name="username" id="contact-name" placeholder="Name" class="form-control input-lg">
+                        <input type="email" name="email" id="contact-email" placeholder="Email" class="form-control input-lg">
+
+                        <input type="password" name="password1" id="contact-name" placeholder="Name" class="form-control input-lg">
+                        <input type="password" name="password2" id="contact-name" placeholder="Name" class="form-control input-lg">
+                        <div class="buttons clearfix">
+                            <button type="submit" class="btn btn-xlarge btn-clean-one">Go -></button>
+
+                            {% for message in get_flashed_messages() %}
+                             {{ message }}
+                            {% endfor %}
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+{% endblock %}
