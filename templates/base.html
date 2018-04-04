@@ -47,9 +47,9 @@
                                 <a href="{{ url_for('post') }}">Post</a>
                             </li>
                             
-                            {% if logined_name%}
+                            {% if logined_name %}
                             <li>
-                                <a href="{{ url_for('user',user_id=logined_name.id) }}">{{ logined_name }}</a>
+                                <a href="{{ url_for('user',user_id=logined_name.id) }}">{{ logined_name.username }}</a>
                             </li>
                             <li>
                                 <a href="{{ url_for('logout')}}">Logout</a>

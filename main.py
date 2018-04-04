@@ -5,6 +5,7 @@ from flask import Flask, render_template, redirect, request, session, url_for, f
 from exts import db
 from decorators import login_required
 from models import Article, User, Comment, Tag
+from filter_input import TextData
 from config import config
 
 app = Flask(__name__)
@@ -16,7 +17,6 @@ db.init_app(app)
 @app.route('/')
 def index():
     context = {
-
         'articles': Article.query.order_by('-create_time').all()
     }
 
@@ -32,21 +32,39 @@ def register():
         email = request.form.get('email')
         password1 = request.form.get('password1')
         password2 = request.form.get('password2')
-        print("---------",password1,password2)
+
+
+
+        if password2 != password1:
+            flash("前后密码不一致，请重新输入！")
+            return redirect(url_for('register'))
+
+        input_dict = {
+            'username': username,
+            'email': email,
+            'password': password1
+        }
+
+        test = TextData(input_dict)
+        if not test.test_name:
+            flash("用户名不合法")
+            return redirect(url_for('register'))
+        elif not test.test_email:
+            flash("邮箱不合法")
+            return redirect(url_for('register'))
         user = User.query.filter(User.email == email).first()
         if user:
             flash("邮箱已被注册！")
             return redirect(url_for('register'))
+        elif not test.test_password:
+            flash("密码不合法")
+            return redirect(url_for('register'))
         else:
-            if password2 != password1:
-                flash("前后密码不一致，请重新输入！")
-                return redirect(url_for('register'))
-            else:
-                new_user = User(username=username, email=email, password=password1)
+            new_user = User(username=username, email=email, password=password1)
 
-                db.session.add(new_user)
-                db.session.commit()
-                return redirect(url_for('login'))
+            db.session.add(new_user)
+            db.session.commit()
+            return redirect(url_for('login'))
 
 
 @app.route('/login/', methods=['GET', 'POST'])
@@ -56,15 +74,16 @@ def login():
     else:
         input_text = request.form.get('input_text')
         password = request.form.get('password')
-        user_name = User.query.filter(User.email == input_text, password == password).first()
-        user_email = User.query.filter(User.username == input_text, password == password).first()
-        # if user_email or user_name:
+        pattern = '@'
+        user_name = User.query.filter_by(username = input_text, password = password).first()
+        user_email = User.query.filter_by(email = input_text, password = password).first()
+        print(user_name)
         if user_name:
-            session['user_name'] = user_name.username
+            session['logined_id'] = user_name.id
             session.permanent = True
             return redirect(url_for('index'))
         elif user_email:
-            session['user_name'] = user_email.username
+            session['logined_id'] = user_email[0].id
             session.permanent = True
             return redirect(url_for('index'))
         else:
@@ -80,10 +99,13 @@ def logout():
 
 @app.context_processor
 def username_add_global():
-    username = session.get('user_name')
-    print(username)
-    if username:
-        return dict(logined_name=username)
+    user_id = session.get('logined_id')
+
+    if user_id:
+        username = User.query.filter(User.id == user_id).first()
+        if username:
+            print("--------",username)
+            return dict(logined_name=username)
     return dict()
 
 
