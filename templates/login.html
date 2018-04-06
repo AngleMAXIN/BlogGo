@@ -4,25 +4,24 @@
 
 <div class="container">
             <div class="row">
-
                 <div class="col-md-6 col-md-offset-3 clean-superblock" id="contact">
-                    <h2>Login In</h2>
-						
+                    <h2>Login In</h2>					
                     <form action="#" method="POST" accept-charset="utf-8" class="contact-form">
                         <input type="text" name="input_text" id="contact-name" placeholder="请输入邮箱或者昵称" class="form-control input-lg">
-                        
-
-                        <input type="password" name="password" id="contact-name" placeholder="Name" class="form-control input-lg">
-                        
+                        <input type="password" name="password" id="contact-name" placeholder="Password" class="form-control input-lg">                        
                         <div class="buttons clearfix">
                             <button type="submit" class="btn btn-xlarge btn-clean-one">Go -></button>
-                            {% for message in get_flashed_messages() %}
-                            {{ message }}
-                            {% endfor %}
+                                <div class="container">
+                                {% for message in get_flashed_messages() %}
+                                    <div class="alert alert-danger alert-dismissable" style="width: 600px;">
+                                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                        {{ message }}
+                                    </div>
+                                {% endfor %}
+                                </div>
                         </div>
                     </form>
                 </div>
-
             </div>
         </div>
 {% endblock %}

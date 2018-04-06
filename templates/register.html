@@ -14,15 +14,19 @@
                         <input type="text" name="username" id="contact-name" placeholder="Name" class="form-control input-lg">
                         <input type="email" name="email" id="contact-email" placeholder="Email" class="form-control input-lg">
 
-                        <input type="password" name="password1" id="contact-name" placeholder="Name" class="form-control input-lg">
-                        <input type="password" name="password2" id="contact-name" placeholder="Name" class="form-control input-lg">
+                        <input type="password" name="password1" id="contact-name" placeholder="Password" class="form-control input-lg">
+                        <input type="password" name="password2" id="contact-name" placeholder="Password" class="form-control input-lg">
                         <div class="buttons clearfix">
                             <button type="submit" class="btn btn-xlarge btn-clean-one">Go -></button>
+                    <div class="container">
+                    {% for message in get_flashed_messages() %}
+                    <div class="alert alert-danger alert-dismissable" style="width: 600px;">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 
-                            {% for message in get_flashed_messages() %}
-                             {{ message }}
-                            {% endfor %}
-
+                     {{ message }}
+                    </div>
+                    {% endfor %}
+                    </div>
                     </form>
                 </div>
             </div>

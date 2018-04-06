@@ -9,7 +9,7 @@ def login_required(func):
     @wraps(func)
     def wrapper(*args, **kwargs):
 
-        if session.get('user_id'):
+        if session.get('logined_id'):
 
             return func(*args, **kwargs)
 

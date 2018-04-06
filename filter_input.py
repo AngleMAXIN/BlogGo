@@ -6,25 +6,9 @@ import re
 class TextData(object):
 
     """检验输入类"""
-    def __init__(self, dict_data):
+    def __init__(self, dict_data=dict()):
 
         self.str_dict = dict_data
-        # self.email = False
-        # self.name = False
-        # self.password = False
-    # def test(self):
-    #
-    #     """汇总检验数据，如果全都合法返回True"""
-    #
-    #     if self._test_name():
-    #         self.name = True
-    #     elif self._test_name():
-    #         self.email = True
-    #     elif self._test_password():
-    #         self.password = True
-    #
-    #     if self.password and self.email and self.password:
-    #         return True
 
     @property
     def test_email(self):
@@ -34,7 +18,7 @@ class TextData(object):
         pattern = r'[0-9a-z]{0,12}@[0-9a-z]{2,10}.com'
         if re.match(pattern, self.str_dict['email']):
             return True
-        else:`
+        else:
             return False
 
     @property
@@ -64,13 +48,19 @@ class TextData(object):
         else:
             return True
 
+class Testlogin(object):
+    """检查登录的数据合法性"""
+    def __init__(self, dict_data=dict()):
+        self.str_dict = dict_data
 
-    def test_input_text(self,input_text):
+    def test_password(self):
+        pass
 
-        """判断输入的是邮箱还是用户名"""
-
+    @property
+    def test_input_text(self,):
+        """判断输入的是邮箱还是用户名,如果是邮箱就返回False，反则，返回True"""
         pattern = r'@'
-        if re.search(pattern, input_text):
+        if re.search(pattern, self.str_dict['input_text']):
             return False
         else:
             return True

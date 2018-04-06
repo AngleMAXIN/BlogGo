@@ -3,7 +3,7 @@
 
 from exts import db
 from datetime import datetime
-
+from werkzeug.security import generate_password_hash, check_password_hash
 
 class User(db.Model):
 
@@ -13,9 +13,23 @@ class User(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)  #autoincrement=True自动递增
     username = db.Column(db.String(50), nullable=False)
-    password = db.Column(db.String(50), nullable=False)
+    password = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), nullable=False)
 
+    @property
+    def passtext(self):
+        #如果有读取行为，则返回错误
+        raise AttributeError('不可以读取当前密码')
+
+    @passtext.setter
+    def passtext(self, password_str):
+        #计算密码的散列值，并赋给password字段
+        self.password = generate_password_hash(password_str)
+
+    def verify_password(self, password_str):
+        #检测密码是否正确，正确就返回True
+        return check_password_hash(self.password, password_str)
+        
     def __repr__(self):
         return '<User %s >' % self.username
 

@@ -5,7 +5,7 @@ from flask import Flask, render_template, redirect, request, session, url_for, f
 from exts import db
 from decorators import login_required
 from models import Article, User, Comment, Tag
-from filter_input import TextData
+from filter_input import TextData, Testlogin
 from config import config
 
 app = Flask(__name__)
@@ -28,20 +28,17 @@ def register():
     if request.method == 'GET':
         return render_template('register.html')
     else:
-        username = request.form.get('username')
-        email = request.form.get('email')
+        
         password1 = request.form.get('password1')
         password2 = request.form.get('password2')
-
-
 
         if password2 != password1:
             flash("前后密码不一致，请重新输入！")
             return redirect(url_for('register'))
 
         input_dict = {
-            'username': username,
-            'email': email,
+            'username': request.form.get('username'),
+            'email': request.form.get('email'),
             'password': password1
         }
 
@@ -52,7 +49,7 @@ def register():
         elif not test.test_email:
             flash("邮箱不合法")
             return redirect(url_for('register'))
-        user = User.query.filter(User.email == email).first()
+        user = User.query.filter(User.email == input_dict['email']).first()
         if user:
             flash("邮箱已被注册！")
             return redirect(url_for('register'))
@@ -60,10 +57,14 @@ def register():
             flash("密码不合法")
             return redirect(url_for('register'))
         else:
-            new_user = User(username=username, email=email, password=password1)
+            new_user = User()
+            new_user.username = input_dict['username']
+            new_user.email = input_dict['email']
+            new_user.passtext = input_dict['password']
 
             db.session.add(new_user)
             db.session.commit()
+
             return redirect(url_for('login'))
 
 
@@ -72,18 +73,21 @@ def login():
     if request.method == 'GET':
         return render_template('login.html')
     else:
-        input_text = request.form.get('input_text')
-        password = request.form.get('password')
-        pattern = '@'
-        user_name = User.query.filter_by(username = input_text, password = password).first()
-        user_email = User.query.filter_by(email = input_text, password = password).first()
-        print(user_name)
-        if user_name:
-            session['logined_id'] = user_name.id
-            session.permanent = True
-            return redirect(url_for('index'))
-        elif user_email:
-            session['logined_id'] = user_email[0].id
+        input_dict = {
+            'input_text': request.form.get('input_text'),
+            'password' : request.form.get('password')
+        }
+        test = Testlogin(input_dict)
+        if not test.test_input_text:
+            print("youxaing**********")
+            user = User.query.filter_by(email = input_dict['input_text']).first()
+        else:  
+            print("******888")  
+            user = User.query.filter_by(username = input_dict['input_text']).first()
+        print("----------",user,input_dict['password'])
+        if user and user.verify_password(input_dict['password']):
+            print("7777777",user.id)
+            session['logined_id'] = user.id
             session.permanent = True
             return redirect(url_for('index'))
         else:
@@ -100,11 +104,10 @@ def logout():
 @app.context_processor
 def username_add_global():
     user_id = session.get('logined_id')
-
+    print(user_id)
     if user_id:
         username = User.query.filter(User.id == user_id).first()
         if username:
-            print("--------",username)
             return dict(logined_name=username)
     return dict()
 
@@ -144,18 +147,15 @@ def post():
     if request.method == 'GET':
         return render_template('post.html')
     else:
+        author_id = session.get('logined_id')
         title = request.form.get('title')
         content = request.form.get('content')
-        author_name = request.form.get('username')
         tags_content = request.form.get('tag')
-        email = request.form.get('email')
         article = Article(title=title, content=content)
-        author = User(username=author_name, email=email)
         tags = Tag(content=tags_content)
-        article.author = author
+        article.author = User.query.filter_by(id = author_id).first()
         db.session.add(tags)
         db.session.add(article)
-        db.session.add(author)
         db.session.commit()
 
         return redirect(url_for('index'))
@@ -187,4 +187,4 @@ def tags_list():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(port=8080)
