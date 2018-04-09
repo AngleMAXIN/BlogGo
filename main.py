@@ -79,14 +79,14 @@ def login():
         }
         test = Testlogin(input_dict)
         if not test.test_input_text:
-            print("youxaing**********")
+
             user = User.query.filter_by(email = input_dict['input_text']).first()
         else:  
-            print("******888")  
+
             user = User.query.filter_by(username = input_dict['input_text']).first()
-        print("----------",user,input_dict['password'])
+
         if user and user.verify_password(input_dict['password']):
-            print("7777777",user.id)
+
             session['logined_id'] = user.id
             session.permanent = True
             return redirect(url_for('index'))
@@ -104,7 +104,6 @@ def logout():
 @app.context_processor
 def username_add_global():
     user_id = session.get('logined_id')
-    print(user_id)
     if user_id:
         username = User.query.filter(User.id == user_id).first()
         if username:
@@ -119,7 +118,6 @@ def single(art_id):
 
 
 @app.route('/add_comment/', methods=['POST'])
-@login_required
 def add_comment():
     comment_content = request.form.get('message')
     if comment_content:
@@ -160,6 +158,20 @@ def post():
 
         return redirect(url_for('index'))
 
+@app.route('/search_list/',methods=["GET"])
+def search_list():
+
+    keyword = request.args.get('keyword')
+
+    if keyword:
+        title_result = Article.query.filter(Article.title.like('%'+keyword+'%')).all()
+        content_result = Article.query.filter(Article.content.like('%'+keyword+'%')).all()
+        result =  title_result.append(content_result)
+        print("title_result",title_result)
+        context = {
+            'articles': title_result
+        }
+        return render_template('search.html', **context)
 
 @app.route('/user/<user_id>')
 def user(user_id):
@@ -187,4 +199,4 @@ def tags_list():
 
 
 if __name__ == '__main__':
-    app.run(port=8080)
+    app.run(host='0.0.0.1',port='8080')

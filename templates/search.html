@@ -1,7 +1,10 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
+
+
 {% block body %}
 
     {% for article in articles %}
+        {% if article %}
             <div class="col-md-6 col-sm-6">
                 <article class=" blog-teaser">
                     <header>
@@ -18,9 +21,8 @@
                     </div>
                 </article>
             </div>
+        {% endif %}
 
 {% endfor %}
-                    <div class="paging">
-                        <a href="#" class="older">Older Post</a>
-                    </div>
+
 {% endblock %}
