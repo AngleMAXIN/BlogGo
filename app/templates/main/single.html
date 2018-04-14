@@ -1,11 +1,11 @@
-{% extends 'base.html' %}
+{% extends 'main/base.html' %}
 
 {% block body %}
         <article class="blog-post">
                         <header>
                            
                             <div class="lead-image">
-                                <img src="{{ url_for('static',filename='img/single-post.jpg')}}" alt="" class="img-responsive">
+                                <img src="{{ url_for('static',filename='main/img/single-post.jpg')}}" alt="" class="img-responsive">
                                 
                             </div>
                         </header>
@@ -31,7 +31,7 @@
                         {% for post in article.comments %}
                         <article class="comment">
                             <header class="clearfix">
-                                <img src="{{ url_for('static',filename="img/avatar.png") }}" alt="A Smart Guy" class="avatar">
+                                <img src="{{ url_for('static',filename="main/img/avatar.png") }}" alt="A Smart Guy" class="avatar">
                                 <div class="meta">
                                     <h3><a href="#">{{ post.author }}</a></h3>
                                     <span class="date">
@@ -79,7 +79,7 @@
 
                         <h2><i class="fa fa-pencil"></i> Add Comment</h2>
 
-        <form action="{{ url_for('add_comment') }}" method="post" accept-charset="utf-8">
+        <form action="{{ url_for('main.add_comment') }}" method="post" accept-charset="utf-8">
             <div class="row">
                 <div class="col-md-6">
                     <input type="text" name="name" id="comment-name" placeholder="Your Name" class="form-control input-lg">    
@@ -100,26 +100,3 @@
                     </aside>               
 {% endblock %}
 
-{% block list_header %}
-    <ul class="clean-list">
-    {% for foo in author %}
-      <li><a href="#">{{ foo.username }}</a></li>
-    {% endfor %}
-    </ul>
-{% endblock %}
-
-{% block list_mider %}
-    <ul class="clean-list">
-       {% for foo in articles %}
-      <li><a href="{{ url_for('single', art_id=foo.id) }}">{{ foo.title }}</a></li>
-    {% endfor %}
-    </ul>
-{% endblock %}
-
-{% block list_footer %}
-    <ul class="tags">
-        {% for foo in tags %}
-      <li><a href="#">{{ foo.content }}</a></li>
-    {% endfor %}
-    </ul>
-{% endblock %}

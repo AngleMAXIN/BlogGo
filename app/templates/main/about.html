@@ -1,12 +1,11 @@
-{% extends '_base.html' %}
+{% extends 'main/_base.html' %}
 
 {% block body_one %}
     <h1>你好，我的名字是<span class="about-bold"> 刘看山</span></h1>
             <p>这是鄙人经过几个星期的连续奋斗精心打造而成的网站</p>
             <p>虽然功能十分简陋，但毕竟包含鄙人心血</p>
     <div class="about-button">
-                <a class="btn btn-xlarge btn-clean-one" href="{{ url_for('post') }}">挑衅</a>
+                <a class="btn btn-xlarge btn-clean-one" href="{{ url_for('main.post') }}">挑衅</a>
             </div>
-
 
 {% endblock %}

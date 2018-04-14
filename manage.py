@@ -1,11 +1,12 @@
 #/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from main import app, db
-from flask_script import Manager, Shell
 from flask_migrate import MigrateCommand, Migrate
-from models import User, Article, Comment
+from flask_script import Manager
 
+from app import create_app, db
+
+app = create_app('default')
 manager = Manager(app)
 
 migrate = Migrate(app, db)

@@ -1,9 +1,12 @@
 #/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from exts import db
 from datetime import datetime
+
 from werkzeug.security import generate_password_hash, check_password_hash
+
+from app import db
+
 
 class User(db.Model):
 
