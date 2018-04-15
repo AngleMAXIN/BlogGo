@@ -1,8 +1,8 @@
 # /usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from flask import render_template, redirect, request, session, url_for, flash
-
+from flask import render_template, redirect, request, session, url_for, flash, Markup
+from sqlalchemy import or_
 from app import db
 from app.extension.decorators import login_required
 from app.extension.filter_input import TextData, Testlogin
@@ -12,9 +12,10 @@ from . import main
 
 @main.route('/')
 def index():
-    context = {'articles': Article.query.order_by('-create_time').all()}
+    page = request.args.get('page', 1, type=int)
 
-    return render_template('main/index.html', **context)
+    articles = Article.query.order_by('-create_time').paginate(page, per_page=4,error_out=False)
+    return render_template('main/index.html', articles=articles)
 
 
 @main.route('/register/', methods=['GET', 'POST'])
@@ -102,6 +103,7 @@ def username_add_global():
 @main.route('/single/<art_id>/')
 def single(art_id):
     context = {'article': Article.query.filter(Article.id == art_id).first()}
+
     return render_template('main/single.html', **context)
 
 
@@ -150,12 +152,12 @@ def post():
 @main.route('/search_list/', methods=["GET"])
 def search_list():
     keyword = request.args.get('keyword')
-
     if keyword:
-        title_result = Article.query.filter(Article.title.like('%' + keyword + '%')).all()
-        content_result = Article.query.filter(Article.content.like('%' + keyword + '%')).all()
-        result = title_result.append(content_result)
-        print("title_result", title_result)
+        print("contnet   ",)
+        title_result = Article.query.filter( or_(
+            Article.content.like('%' + keyword + '%'),
+            Article.title.like('%'+ keyword + '%') )
+        ).all()
         context = {'articles': title_result}
         return render_template('main/search.html', **context)
 

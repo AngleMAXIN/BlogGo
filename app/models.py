@@ -8,6 +8,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from app import db
 
 
+
 class User(db.Model):
 
     """用户数据模型"""
@@ -61,13 +62,23 @@ class Article(db.Model):
     create_time = db.Column(db.DateTime, default=datetime.now)
     tag_id = db.Column(db.Integer, db.ForeignKey('tags.id'))
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-
+    # html_body = db.Column(db.Text, nullable=False)
     tag = db.relationship('Tag', backref=db.backref('tags'))
     author = db.relationship('User', backref=db.backref('article'))
+
+    # @staticmethod
+    # def on_body_change(target, value, oldvalue, initiator):
+    #     allowed_tags = ['a', 'ul', 'strong', 'p', 'h1', 'h2', 'h3']
+    #     html_body = markdown(value, output_format='html')
+    #     html_body = bleach.clean(html_body, tags=allowed_tags, strip=True)
+    #     html_body = bleach.linkify(html_body)
+    #     target.html_body = html_body
+
 
     def __repr__(self):
         return '<Article %s >' % self.title
 
+# db.event.listen(Article.content, 'set', Article.on_body_change)
 
 class Comment(db.Model):
 

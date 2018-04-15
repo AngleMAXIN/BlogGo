@@ -1,16 +1,18 @@
 {% extends 'main/base.html' %}
+{% import "ui/admin_page.html" as pg %}
 {% block body %}
-    {% for article in articles %}
+    {% for article in articles.items %}
             <div class="col-md-6 col-sm-6">
                 <article class=" blog-teaser">
                     <header>
                         <img src="{{ url_for('static', filename='main/img/1.jpg') }}" alt="">
-                        <h3><a href="{{ url_for('main.single', art_id=article.id) }}">{{ article.title }}</a></h3>
+                        <h3><a href="{{ url_for('main.single', art_id=article.id) }}">
+                            {{ article.title[:9]}} ...</a></h3>
                         <span class="meta">{{ article.create_time }}, {{ article.author.username }}</span>
                         <hr>
                     </header>
                     <div class="body">
-                        {{ article.content[:60] }}... ...
+                        {{ article.content[:24] }}... ...
                     </div>
                     <div class="clearfix">
                         <a href="{{ url_for('main.single', art_id=article.id) }}" class="btn btn-clean-one">Read more</a>
@@ -19,9 +21,12 @@
             </div>
 
 {% endfor %}
-                    <div class="paging">
-                        <a href="#" class="older">Older Post</a>
+{#        {% if articles %}#}
+
+    <div class="paging">
+                        {{ pg.page(articles, 'main.index') }}
                     </div>
+{#        {% endif %}#}
 {% endblock %}
 
 

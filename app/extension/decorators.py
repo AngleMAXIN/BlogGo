@@ -19,7 +19,7 @@ def login_required(func):
 
         else:
 
-            return redirect(url_for('login'))
+            return redirect(url_for('main.login'))
 
     return wrapper
 

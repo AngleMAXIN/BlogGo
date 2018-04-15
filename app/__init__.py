@@ -4,6 +4,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from config import config
+from flaskext.markdown import Markdown
 import pymysql
 
 pymysql.install_as_MySQLdb()
@@ -15,7 +16,7 @@ def create_app(config_name):
     app.config.from_object(config[config_name])
     config[config_name].init_app(app)
     db.init_app(app)
-
+    Markdown(app)
     from .main import main as main_bluprint
     app.register_blueprint(main_bluprint)
 
