@@ -8,6 +8,8 @@ from flask import session, redirect, url_for
 from app.models import User, Article, Tag
 from ..main import main
 
+class ValidationError(ValueError):
+    pass
 
 def login_required(func):
     @wraps(func)
