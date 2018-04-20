@@ -24,7 +24,7 @@ def get_posts():
     return jsonify({'posts': [post.to_json() for post in articles]})
 
 
-@api.route('/post/<int:id>')
+@api.route('/post/<int:id>', methods=['GET'])
 @auth.login_required
 def get_post(id):
     artilces = Article.query.get_or_404(id)

@@ -6,7 +6,7 @@ from flask import current_app, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
 from itsdangerous import Serializer
 from app import db
-from  .api_1_0.authentication import ValidationError
+# from  .api_1_0.authentication import ValidationError
 
 
 class User(db.Model):

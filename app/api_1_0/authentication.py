@@ -1,11 +1,11 @@
 # /usr/bin/env python3
 # -*- coding: utf-8 -*-
-from flask import jsonify
+from flask import jsonify, g
 from flask_httpauth import HTTPBasicAuth
 from flask_login import AnonymousUserMixin
 from . import api
 from .errors import forbidden, unauthorized
-from app.models import User
+from ..models import User
 
 auth = HTTPBasicAuth()
 
