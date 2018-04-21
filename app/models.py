@@ -6,7 +6,9 @@ from flask import current_app, url_for
 from werkzeug.security import generate_password_hash, check_password_hash
 from itsdangerous import Serializer
 from app import db
-# from  .api_1_0.authentication import ValidationError
+
+class ValidationError(ValueError):
+    pass
 
 
 class User(db.Model):
@@ -49,6 +51,13 @@ class User(db.Model):
         为单位的过期时间"""
         s = Serializer(current_app.config['SECRET_KEY'], expires_in=expiration)
         return s.dumps('id', 'self.id')
+
+    @property
+    def is_anonymous(self):
+        return False
+    @property
+    def confirmed(self):
+        return True
 
     @staticmethod
     def verify_auth_token(token):

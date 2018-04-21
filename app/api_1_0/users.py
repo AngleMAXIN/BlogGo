@@ -2,16 +2,19 @@
 # -*- coding: utf-8 -*-
 
 from . import api
-from ..models import User, Article
-from flask import jsonify, request, current_app, url_for
+from ..models import User
+from flask import jsonify
 
 @api.route('/user/<int:id>')
-def get_user():
-    user = User.get_or_404(id)
+def get_user(id):
+    user = User.query.get_or_404(id)
     return jsonify(user.to_json())
 
-@api.route('/user/<int:id>/post/')
-def get_user_posts(id):
+@api.route('/user/<int:id>/posts/')
+def get_user_post(id):
     user = User.query.get_or_404(id)
-    page = request.args.get('page',1,type=int)
-    pagination = user.a
+    posts = user.article
+    return jsonify({
+        'posts': [post.to_json() for post in posts]
+    })
+
