@@ -3,13 +3,13 @@
 
 from flask import render_template, redirect, request, session, url_for, flash, Markup
 from sqlalchemy import or_
-from app import db
+from app import db, cache
 from app.extension.decorators import login_required
 from app.extension.filter_input import TextData, Testlogin
 from app.models import Article, User, Comment, Tag
 from . import main
 
-
+@cache.cached(timeout=7200, key_prefix='index')
 @main.route('/')
 def index():
     page = request.args.get('page', 1, type=int)

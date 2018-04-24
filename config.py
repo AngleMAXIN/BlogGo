@@ -25,6 +25,7 @@ class Config(object):
 class DevelopmentConfig(Config):
     """开发时的数据库"""
     DEBUG = True
+    CACHE_TYPE = 'simple'
     DATABASE = 'bloggo_dev_db'
     SQLALCHEMY_DATABASE_URI = 'mysql://{}:{}@{}:{}/{}?charset=utf8'.format( USERNAME,
                                                                             PASSWORD,
